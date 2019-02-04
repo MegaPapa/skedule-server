@@ -1,0 +1,14 @@
+package com.megapapa.sk.auth.annotation;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Target({ElementType.METHOD})
+@Retention(RetentionPolicy.RUNTIME)
+public @interface SecureApi {
+
+    // permission will have next structure entity:permissionType
+    String permission() default "";
+}

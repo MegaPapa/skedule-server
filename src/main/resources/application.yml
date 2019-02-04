@@ -1,0 +1,65 @@
+userCache:
+  type: caffeine
+  cacheLifeTimeMillis: 300000 # 5 min
+  cacheMaxSize: 100
+
+auth:
+  resourcesPackage: com.megapapa.sk.resource
+
+rabbitmq:
+  connections:
+    sk-auth:
+      type: 'amqp'
+      automaticRecoveryEnabled: true
+      connectionTimeout: 60000
+      handshakeTimeout: 60000
+      host: localhost
+      password: guest
+      port: 5672
+      username: guest
+      virtualHost: /
+  exchanges:
+   sk-auth-exchange:
+     autoDelete: false
+     durable: true
+     internal: true
+     type: TOPIC
+  queues:
+   sk-auth:
+     autoDelete: false
+     durable: true
+     exclusive: false
+
+# Jetty config
+jetty:
+ connector:
+  port: 9000
+ context: /skedule/rest
+ minThreads: 1
+ maxThreads: 40
+
+# JDBC config
+jdbc:
+ skedule:
+  driverClassName: com.mysql.jdbc.Driver
+  url: jdbc:mysql://localhost:3306/skedule-app?connectTimeout=0&autoReconnect=true&useUnicode=true&characterEncoding=UTF-8
+  username: root
+  password: root
+  initialSize: 1
+  maxActive: 20
+  minIdle: 1
+  maxIdle: 4
+  validationQuery: "select 1;"
+  testWhileIdle: true
+  removeAbandoned: true
+  abandonWhenPercentageFull: 80
+  removeAbandonedTimeout: 300
+  jdbcInterceptors: ResetAbandonedTimer
+  rollbackOnReturn: true
+  defaultAutoCommit: false
+
+# Cayenne configs
+cayenne:
+  datasource: skedule
+  configs:
+   - cayenne-skedule.xml
