@@ -7,9 +7,9 @@ public class Currency extends _Currency {
     private static final long serialVersionUID = 1L;
 
     // Access operations
-    public static String CREATE = "currency:create";
-    public static String READ = "currency:read";
-    public static String DELETE = "currency:delete";
-    public static String UPDATE = "currency:update";
-    public static String LIST = "currency:list";
+    public static final String CREATE = "currency:create";
+    public static final String READ = "currency:read";
+    public static final String DELETE = "currency:delete";
+    public static final String UPDATE = "currency:update";
+    public static final String LIST = "currency:list";
 }

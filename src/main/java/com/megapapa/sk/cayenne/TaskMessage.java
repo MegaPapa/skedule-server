@@ -7,9 +7,9 @@ public class TaskMessage extends _TaskMessage {
     private static final long serialVersionUID = 1L;
 
     // Access operations
-    public static String CREATE = "taskMessage:create";
-    public static String READ = "taskMessage:read";
-    public static String DELETE = "taskMessage:delete";
-    public static String UPDATE = "taskMessage:update";
-    public static String LIST = "taskMessage:list";
+    public static final String CREATE = "taskMessage:create";
+    public static final String READ = "taskMessage:read";
+    public static final String DELETE = "taskMessage:delete";
+    public static final String UPDATE = "taskMessage:update";
+    public static final String LIST = "taskMessage:list";
 }

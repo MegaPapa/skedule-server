@@ -35,7 +35,7 @@ public class TaskMessageResource {
 
     @GET
     @Path("{messageId}")
-    @SecureApi(permission = "taskMessage:read")
+    @SecureApi(permission = TaskMessage.READ)
     public DataResponse<TaskMessage> get(@PathParam("messageId") int id, @Context UriInfo uriInfo) {
         return Ag.select(TaskMessage.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.COMPANIES.dot(Company.COMPANY_TASKS.dot(CompanyTask.TASK_MESSAGES)))
@@ -45,7 +45,7 @@ public class TaskMessageResource {
     }
 
     @POST
-    @SecureApi(permission = "taskMessage:create")
+    @SecureApi(permission = TaskMessage.CREATE)
     public SimpleResponse post(String data) {
         return Ag.create(TaskMessage.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.COMPANIES.dot(Company.COMPANY_TASKS.dot(CompanyTask.TASK_MESSAGES)))
@@ -53,7 +53,7 @@ public class TaskMessageResource {
     }
 
     @PUT
-    @SecureApi(permission = "taskMessage:update")
+    @SecureApi(permission = TaskMessage.UPDATE)
     public SimpleResponse put(String data) {
         return Ag.createOrUpdate(TaskMessage.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.COMPANIES.dot(Company.COMPANY_TASKS.dot(CompanyTask.TASK_MESSAGES)))
@@ -62,7 +62,7 @@ public class TaskMessageResource {
 
     @DELETE
     @Path("{messageId}")
-    @SecureApi(permission = "taskMessage:delete")
+    @SecureApi(permission = TaskMessage.DELETE)
     public SimpleResponse delete(@PathParam("messageId") int id) {
         return Ag.delete(TaskMessage.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.COMPANIES.dot(Company.COMPANY_TASKS.dot(CompanyTask.TASK_MESSAGES)))
@@ -71,7 +71,7 @@ public class TaskMessageResource {
     }
 
     @GET
-    @SecureApi(permission = "taskMessage:list")
+    @SecureApi(permission = TaskMessage.LIST)
     public DataResponse<TaskMessage> list(@Context UriInfo uriInfo) {
         return Ag.select(TaskMessage.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.COMPANIES.dot(Company.COMPANY_TASKS.dot(CompanyTask.TASK_MESSAGES)))

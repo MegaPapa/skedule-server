@@ -18,6 +18,7 @@ public abstract class _MovieWatchTask extends CayenneDataObject {
     public static final String ID_PK_COLUMN = "id";
 
     public static final Property<Integer> IMDB_MOVIE_ID = Property.create("imdbMovieId", Integer.class);
+    public static final Property<Boolean> IS_COMPLETED = Property.create("isCompleted", Boolean.class);
     public static final Property<Integer> KINOPOISK_MOVIE_ID = Property.create("kinopoiskMovieId", Integer.class);
     public static final Property<String> TITLE = Property.create("title", String.class);
     public static final Property<MongoUser> MONGO_USER = Property.create("mongoUser", MongoUser.class);
@@ -28,6 +29,14 @@ public abstract class _MovieWatchTask extends CayenneDataObject {
     public int getImdbMovieId() {
         Object value = readProperty("imdbMovieId");
         return (value != null) ? (Integer) value : 0;
+    }
+
+    public void setIsCompleted(boolean isCompleted) {
+        writeProperty("isCompleted", isCompleted);
+    }
+	public boolean isIsCompleted() {
+        Boolean value = (Boolean)readProperty("isCompleted");
+        return (value != null) ? value.booleanValue() : false;
     }
 
     public void setKinopoiskMovieId(int kinopoiskMovieId) {

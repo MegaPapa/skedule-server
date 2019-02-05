@@ -33,7 +33,7 @@ public class SelfTaskResource {
 
     @GET
     @Path("{taskId}")
-    @SecureApi(permission = "selfTask:read")
+    @SecureApi(permission = SelfTask.READ)
     public DataResponse<SelfTask> get(@PathParam("taskId") int id, @Context UriInfo uriInfo) {
         return Ag.select(SelfTask.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.SELF_TASKS)
@@ -43,7 +43,7 @@ public class SelfTaskResource {
     }
 
     @POST
-    @SecureApi(permission = "selfTask:create")
+    @SecureApi(permission = SelfTask.CREATE)
     public SimpleResponse post(String data) {
         return Ag.create(SelfTask.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.SELF_TASKS)
@@ -51,7 +51,7 @@ public class SelfTaskResource {
     }
 
     @PUT
-    @SecureApi(permission = "selfTask:update")
+    @SecureApi(permission = SelfTask.UPDATE)
     public SimpleResponse put(String data) {
         return Ag.createOrUpdate(SelfTask.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.SELF_TASKS)
@@ -60,7 +60,7 @@ public class SelfTaskResource {
 
     @DELETE
     @Path("{taskId}")
-    @SecureApi(permission = "selfTask:delete")
+    @SecureApi(permission = SelfTask.DELETE)
     public SimpleResponse delete(@PathParam("taskId") int id) {
         return Ag.delete(SelfTask.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.SELF_TASKS)
@@ -69,7 +69,7 @@ public class SelfTaskResource {
     }
 
     @GET
-    @SecureApi(permission = "selfTask:list")
+    @SecureApi(permission = SelfTask.LIST)
     public DataResponse<SelfTask> list(@Context UriInfo uriInfo) {
         return Ag.select(SelfTask.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.SELF_TASKS)

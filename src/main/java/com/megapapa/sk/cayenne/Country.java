@@ -7,9 +7,9 @@ public class Country extends _Country {
     private static final long serialVersionUID = 1L;
 
     // Access operations
-    public static String CREATE = "country:create";
-    public static String READ = "country:read";
-    public static String DELETE = "country:delete";
-    public static String UPDATE = "country:update";
-    public static String LIST = "country:list";
+    public static final String CREATE = "country:create";
+    public static final String READ = "country:read";
+    public static final String DELETE = "country:delete";
+    public static final String UPDATE = "country:update";
+    public static final String LIST = "country:list";
 }

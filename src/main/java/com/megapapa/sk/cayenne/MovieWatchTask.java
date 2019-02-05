@@ -7,9 +7,9 @@ public class MovieWatchTask extends _MovieWatchTask {
     private static final long serialVersionUID = 1L;
 
     // Access operations
-    public static String CREATE = "movieWatchTask:create";
-    public static String READ = "movieWatchTask:read";
-    public static String DELETE = "movieWatchTask:delete";
-    public static String UPDATE = "movieWatchTask:update";
-    public static String LIST = "movieWatchTask:list";
+    public static final String CREATE = "movieWatchTask:create";
+    public static final String READ = "movieWatchTask:read";
+    public static final String DELETE = "movieWatchTask:delete";
+    public static final String UPDATE = "movieWatchTask:update";
+    public static final String LIST = "movieWatchTask:list";
 }

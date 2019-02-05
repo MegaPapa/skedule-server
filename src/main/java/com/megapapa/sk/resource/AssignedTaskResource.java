@@ -33,7 +33,7 @@ public class AssignedTaskResource {
 
     @GET
     @Path("{taskId}")
-    @SecureApi(permission = "assignedTask:read")
+    @SecureApi(permission = AssignedTask.READ)
     public DataResponse<AssignedTask> get(@PathParam("taskId") int id, @Context UriInfo uriInfo) {
         return Ag.select(AssignedTask.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.ASSIGNED_TASKS)
@@ -43,7 +43,7 @@ public class AssignedTaskResource {
     }
 
     @POST
-    @SecureApi(permission = "assignedTask:create")
+    @SecureApi(permission = AssignedTask.CREATE)
     public SimpleResponse post(String data) {
         return Ag.create(AssignedTask.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.ASSIGNED_TASKS)
@@ -51,7 +51,7 @@ public class AssignedTaskResource {
     }
 
     @PUT
-    @SecureApi(permission = "assignedTask:update")
+    @SecureApi(permission = AssignedTask.UPDATE)
     public SimpleResponse put(String data) {
         return Ag.createOrUpdate(AssignedTask.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.ASSIGNED_TASKS)
@@ -60,7 +60,7 @@ public class AssignedTaskResource {
 
     @DELETE
     @Path("{taskId}")
-    @SecureApi(permission = "assignedTask:delete")
+    @SecureApi(permission = AssignedTask.DELETE)
     public SimpleResponse delete(@PathParam("taskId") int id) {
         return Ag.delete(AssignedTask.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.ASSIGNED_TASKS)
@@ -69,7 +69,7 @@ public class AssignedTaskResource {
     }
 
     @GET
-    @SecureApi(permission = "assignedTask:list")
+    @SecureApi(permission = AssignedTask.LIST)
     public DataResponse<AssignedTask> list(@Context UriInfo uriInfo) {
         return Ag.select(AssignedTask.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.ASSIGNED_TASKS)

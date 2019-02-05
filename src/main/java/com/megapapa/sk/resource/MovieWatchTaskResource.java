@@ -33,7 +33,7 @@ public class MovieWatchTaskResource {
 
     @GET
     @Path("{taskId}")
-    @SecureApi(permission = "movieWatchTask:read")
+    @SecureApi(permission = MovieWatchTask.READ)
     public DataResponse<MovieWatchTask> get(@PathParam("taskId") int id, @Context UriInfo uriInfo) {
         return Ag.select(MovieWatchTask.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.MOVIE_WATCH_TASKS)
@@ -43,7 +43,7 @@ public class MovieWatchTaskResource {
     }
 
     @POST
-    @SecureApi(permission = "movieWatchTask:create")
+    @SecureApi(permission = MovieWatchTask.CREATE)
     public SimpleResponse post(String data) {
         return Ag.create(MovieWatchTask.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.MOVIE_WATCH_TASKS)
@@ -51,7 +51,7 @@ public class MovieWatchTaskResource {
     }
 
     @PUT
-    @SecureApi(permission = "movieWatchTask:update")
+    @SecureApi(permission = MovieWatchTask.UPDATE)
     public SimpleResponse put(String data) {
         return Ag.createOrUpdate(MovieWatchTask.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.MOVIE_WATCH_TASKS)
@@ -60,7 +60,7 @@ public class MovieWatchTaskResource {
 
     @DELETE
     @Path("{taskId}")
-    @SecureApi(permission = "movieWatchTask:delete")
+    @SecureApi(permission = MovieWatchTask.DELETE)
     public SimpleResponse delete(@PathParam("taskId") int id) {
         return Ag.delete(MovieWatchTask.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.MOVIE_WATCH_TASKS)
@@ -69,7 +69,7 @@ public class MovieWatchTaskResource {
     }
 
     @GET
-    @SecureApi(permission = "movieWatchTask:list")
+    @SecureApi(permission = MovieWatchTask.LIST)
     public DataResponse<MovieWatchTask> list(@Context UriInfo uriInfo) {
         return Ag.select(MovieWatchTask.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.MOVIE_WATCH_TASKS)

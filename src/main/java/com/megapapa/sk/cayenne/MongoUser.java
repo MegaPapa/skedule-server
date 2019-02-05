@@ -7,9 +7,9 @@ public class MongoUser extends _MongoUser {
     private static final long serialVersionUID = 1L;
 
     // Access operations
-    public static String CREATE = "mongoUser:create";
-    public static String READ = "mongoUser:read";
-    public static String DELETE = "mongoUser:delete";
-    public static String UPDATE = "mongoUser:update";
-    public static String LIST = "mongoUser:list";
+    public static final String CREATE = "mongoUser:create";
+    public static final String READ = "mongoUser:read";
+    public static final String DELETE = "mongoUser:delete";
+    public static final String UPDATE = "mongoUser:update";
+    public static final String LIST = "mongoUser:list";
 }

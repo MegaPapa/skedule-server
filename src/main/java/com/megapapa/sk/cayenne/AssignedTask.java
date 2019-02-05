@@ -7,10 +7,10 @@ public class AssignedTask extends _AssignedTask {
     private static final long serialVersionUID = 1L;
 
     // Access operations
-    public static String CREATE = "assignedTask:create";
-    public static String READ = "assignedTask:read";
-    public static String DELETE = "assignedTask:delete";
-    public static String UPDATE = "assignedTask:update";
-    public static String LIST = "assignedTask:list";
+    public static final String CREATE = "assignedTask:create";
+    public static final String READ = "assignedTask:read";
+    public static final String DELETE = "assignedTask:delete";
+    public static final String UPDATE = "assignedTask:update";
+    public static final String LIST = "assignedTask:list";
 
 }

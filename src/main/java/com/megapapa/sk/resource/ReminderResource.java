@@ -33,7 +33,7 @@ public class ReminderResource {
 
     @GET
     @Path("{reminderId}")
-    @SecureApi(permission = "reminder:read")
+    @SecureApi(permission = Reminder.READ)
     public DataResponse<Reminder> get(@PathParam("reminderId") int id, @Context UriInfo uriInfo) {
         return Ag.select(Reminder.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.REMINDERS)
@@ -43,7 +43,7 @@ public class ReminderResource {
     }
 
     @POST
-    @SecureApi(permission = "reminder:create")
+    @SecureApi(permission = Reminder.CREATE)
     public SimpleResponse post(String data) {
         return Ag.create(Reminder.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.REMINDERS)
@@ -51,7 +51,7 @@ public class ReminderResource {
     }
 
     @PUT
-    @SecureApi(permission = "reminder:update")
+    @SecureApi(permission = Reminder.UPDATE)
     public SimpleResponse put(String data) {
         return Ag.createOrUpdate(Reminder.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.REMINDERS)
@@ -60,7 +60,7 @@ public class ReminderResource {
 
     @DELETE
     @Path("{reminderId}")
-    @SecureApi(permission = "reminder:delete")
+    @SecureApi(permission = Reminder.DELETE)
     public SimpleResponse delete(@PathParam("reminderId") int id) {
         return Ag.delete(Reminder.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.REMINDERS)
@@ -69,7 +69,7 @@ public class ReminderResource {
     }
 
     @GET
-    @SecureApi(permission = "reminder:list")
+    @SecureApi(permission = Reminder.LIST)
     public DataResponse<Reminder> list(@Context UriInfo uriInfo) {
         return Ag.select(Reminder.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.REMINDERS)

@@ -33,7 +33,7 @@ public class RepeatableTaskResource {
 
     @GET
     @Path("{repeatableTaskId}")
-    @SecureApi(permission = "repeatableTask:read")
+    @SecureApi(permission = RepeatableTask.READ)
     public DataResponse<RepeatableTask> get(@PathParam("repeatableTaskId") int id, @Context UriInfo uriInfo) {
         return Ag.select(RepeatableTask.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.REPEATABLE_TASKS)
@@ -43,7 +43,7 @@ public class RepeatableTaskResource {
     }
 
     @POST
-    @SecureApi(permission = "repeatableTask:create")
+    @SecureApi(permission = RepeatableTask.CREATE)
     public SimpleResponse post(String data) {
         return Ag.create(RepeatableTask.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.REPEATABLE_TASKS)
@@ -51,7 +51,7 @@ public class RepeatableTaskResource {
     }
 
     @PUT
-    @SecureApi(permission = "repeatableTask:update")
+    @SecureApi(permission = RepeatableTask.UPDATE)
     public SimpleResponse put(String data) {
         return Ag.createOrUpdate(RepeatableTask.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.REPEATABLE_TASKS)
@@ -60,7 +60,7 @@ public class RepeatableTaskResource {
 
     @DELETE
     @Path("{repeatableTaskId}")
-    @SecureApi(permission = "repeatableTask:delete")
+    @SecureApi(permission = RepeatableTask.DELETE)
     public SimpleResponse delete(@PathParam("repeatableTaskId") int id) {
         return Ag.delete(RepeatableTask.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.REPEATABLE_TASKS)
@@ -69,7 +69,7 @@ public class RepeatableTaskResource {
     }
 
     @GET
-    @SecureApi(permission = "repeatableTask:list")
+    @SecureApi(permission = RepeatableTask.LIST)
     public DataResponse<RepeatableTask> list(@Context UriInfo uriInfo) {
         return Ag.select(RepeatableTask.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.REPEATABLE_TASKS)

@@ -7,9 +7,9 @@ public class BookReadTask extends _BookReadTask {
     private static final long serialVersionUID = 1L;
 
     // Access operations
-    public static String CREATE = "bookReadTask:create";
-    public static String READ = "bookReadTask:read";
-    public static String DELETE = "bookReadTask:delete";
-    public static String UPDATE = "bookReadTask:update";
-    public static String LIST = "bookReadTask:list";
+    public static final String CREATE = "bookReadTask:create";
+    public static final String READ = "bookReadTask:read";
+    public static final String DELETE = "bookReadTask:delete";
+    public static final String UPDATE = "bookReadTask:update";
+    public static final String LIST = "bookReadTask:list";
 }

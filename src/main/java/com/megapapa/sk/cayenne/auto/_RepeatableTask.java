@@ -23,6 +23,7 @@ public abstract class _RepeatableTask extends CayenneDataObject {
     public static final Property<String> CRON = Property.create("cron", String.class);
     public static final Property<String> DESCRIPTION = Property.create("description", String.class);
     public static final Property<LocalDateTime> END_TIME = Property.create("endTime", LocalDateTime.class);
+    public static final Property<Boolean> IS_COMPLETED = Property.create("isCompleted", Boolean.class);
     public static final Property<String> TITLE = Property.create("title", String.class);
     public static final Property<MongoUser> MONGO_USER = Property.create("mongoUser", MongoUser.class);
 
@@ -52,6 +53,14 @@ public abstract class _RepeatableTask extends CayenneDataObject {
     }
     public LocalDateTime getEndTime() {
         return (LocalDateTime)readProperty("endTime");
+    }
+
+    public void setIsCompleted(boolean isCompleted) {
+        writeProperty("isCompleted", isCompleted);
+    }
+	public boolean isIsCompleted() {
+        Boolean value = (Boolean)readProperty("isCompleted");
+        return (value != null) ? value.booleanValue() : false;
     }
 
     public void setTitle(String title) {

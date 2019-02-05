@@ -34,7 +34,7 @@ public class CompanyTaskResource {
 
     @GET
     @Path("{taskId}")
-    @SecureApi(permission = "companyTask:read")
+    @SecureApi(permission = CompanyTask.READ)
     public DataResponse<CompanyTask> get(@PathParam("taskId") int id, @Context UriInfo uriInfo) {
         return Ag.select(CompanyTask.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.COMPANIES.dot(Company.COMPANY_TASKS))
@@ -44,7 +44,7 @@ public class CompanyTaskResource {
     }
 
     @POST
-    @SecureApi(permission = "companyTask:create")
+    @SecureApi(permission = CompanyTask.CREATE)
     public SimpleResponse post(String data) {
         return Ag.create(CompanyTask.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.COMPANIES.dot(Company.COMPANY_TASKS))
@@ -52,7 +52,7 @@ public class CompanyTaskResource {
     }
 
     @PUT
-    @SecureApi(permission = "companyTask:update")
+    @SecureApi(permission = CompanyTask.UPDATE)
     public SimpleResponse put(String data) {
         return Ag.createOrUpdate(CompanyTask.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.COMPANIES.dot(Company.COMPANY_TASKS))
@@ -61,7 +61,7 @@ public class CompanyTaskResource {
 
     @DELETE
     @Path("{taskId}")
-    @SecureApi(permission = "companyTask:delete")
+    @SecureApi(permission = CompanyTask.DELETE)
     public SimpleResponse delete(@PathParam("taskId") int id) {
         return Ag.delete(CompanyTask.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.COMPANIES.dot(Company.COMPANY_TASKS))
@@ -70,7 +70,7 @@ public class CompanyTaskResource {
     }
 
     @GET
-    @SecureApi(permission = "companyTask:list")
+    @SecureApi(permission = CompanyTask.LIST)
     public DataResponse<CompanyTask> list(@Context UriInfo uriInfo) {
         return Ag.select(CompanyTask.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.COMPANIES.dot(Company.COMPANY_TASKS))

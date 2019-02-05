@@ -7,9 +7,9 @@ public class CompanyTask extends _CompanyTask {
     private static final long serialVersionUID = 1L;
 
     // Access operations
-    public static String CREATE = "companyTask:create";
-    public static String READ = "companyTask:read";
-    public static String DELETE = "companyTask:delete";
-    public static String UPDATE = "companyTask:update";
-    public static String LIST = "companyTask:list";
+    public static final String CREATE = "companyTask:create";
+    public static final String READ = "companyTask:read";
+    public static final String DELETE = "companyTask:delete";
+    public static final String UPDATE = "companyTask:update";
+    public static final String LIST = "companyTask:list";
 }

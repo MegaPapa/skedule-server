@@ -7,9 +7,9 @@ public class Language extends _Language {
     private static final long serialVersionUID = 1L;
 
     // Access operations
-    public static String CREATE = "language:create";
-    public static String READ = "language:read";
-    public static String DELETE = "language:delete";
-    public static String UPDATE = "language:update";
-    public static String LIST = "language:list";
+    public static final String CREATE = "language:create";
+    public static final String READ = "language:read";
+    public static final String DELETE = "language:delete";
+    public static final String UPDATE = "language:update";
+    public static final String LIST = "language:list";
 }

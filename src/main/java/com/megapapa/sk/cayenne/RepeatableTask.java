@@ -7,9 +7,9 @@ public class RepeatableTask extends _RepeatableTask {
     private static final long serialVersionUID = 1L;
 
     // Access operations
-    public static String CREATE = "repeatableTask:create";
-    public static String READ = "repeatableTask:read";
-    public static String DELETE = "repeatableTask:delete";
-    public static String UPDATE = "repeatableTask:update";
-    public static String LIST = "repeatableTask:list";
+    public static final String CREATE = "repeatableTask:create";
+    public static final String READ = "repeatableTask:read";
+    public static final String DELETE = "repeatableTask:delete";
+    public static final String UPDATE = "repeatableTask:update";
+    public static final String LIST = "repeatableTask:list";
 }

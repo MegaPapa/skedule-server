@@ -33,7 +33,7 @@ public class BookReadTaskResource {
 
     @GET
     @Path("{taskId}")
-    @SecureApi(permission = "bookReadTask:read")
+    @SecureApi(permission = BookReadTask.READ)
     public DataResponse<BookReadTask> get(@PathParam("taskId") int id, @Context UriInfo uriInfo) {
         return Ag.select(BookReadTask.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.BOOK_READ_TASKS)
@@ -43,7 +43,7 @@ public class BookReadTaskResource {
     }
 
     @POST
-    @SecureApi(permission = "bookReadTask:create")
+    @SecureApi(permission = BookReadTask.CREATE)
     public SimpleResponse post(String data) {
         return Ag.create(BookReadTask.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.BOOK_READ_TASKS)
@@ -51,7 +51,7 @@ public class BookReadTaskResource {
     }
 
     @PUT
-    @SecureApi(permission = "bookReadTask:update")
+    @SecureApi(permission = BookReadTask.UPDATE)
     public SimpleResponse put(String data) {
         return Ag.createOrUpdate(BookReadTask.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.BOOK_READ_TASKS)
@@ -60,7 +60,7 @@ public class BookReadTaskResource {
 
     @DELETE
     @Path("{taskId}")
-    @SecureApi(permission = "bookReadTask:delete")
+    @SecureApi(permission = BookReadTask.DELETE)
     public SimpleResponse delete(@PathParam("taskId") int id) {
         return Ag.delete(BookReadTask.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.BOOK_READ_TASKS)
@@ -69,7 +69,7 @@ public class BookReadTaskResource {
     }
 
     @GET
-    @SecureApi(permission = "bookReadTask:list")
+    @SecureApi(permission = BookReadTask.LIST)
     public DataResponse<BookReadTask> list(@Context UriInfo uriInfo) {
         return Ag.select(BookReadTask.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.BOOK_READ_TASKS)
