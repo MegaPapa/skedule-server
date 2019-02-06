@@ -18,7 +18,7 @@
     <properties>
         <main.class>com.megapapa.sk.SkApp</main.class>
         <bootique.version>1.0.RC1</bootique.version>
-        <mysql.connector.version>8.0.14</mysql.connector.version>
+        <mysql.connector.version>5.1.37</mysql.connector.version>
         <caffeine.version>2.6.2</caffeine.version>
     </properties>
 

@@ -1,7 +1,7 @@
 package com.megapapa.sk.resource;
 
 import com.google.inject.Inject;
-import com.megapapa.sk.auth.annotation.SecureApi;
+import com.megapapa.sk.auth.service.IPermissionService;
 import com.megapapa.sk.auth.service.ISystemUserService;
 import com.megapapa.sk.cayenne.AssignedTask;
 import com.megapapa.sk.cayenne.MongoUser;
@@ -31,10 +31,13 @@ public class AssignedTaskResource {
     @Inject
     private ISystemUserService systemUserService;
 
+    @Inject
+    private IPermissionService permissionService;
+
     @GET
     @Path("{taskId}")
-    @SecureApi(permission = AssignedTask.READ)
     public DataResponse<AssignedTask> get(@PathParam("taskId") int id, @Context UriInfo uriInfo) {
+        permissionService.hasAccess(AssignedTask.READ);
         return Ag.select(AssignedTask.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.ASSIGNED_TASKS)
                 .byId(id)
@@ -43,16 +46,16 @@ public class AssignedTaskResource {
     }
 
     @POST
-    @SecureApi(permission = AssignedTask.CREATE)
     public SimpleResponse post(String data) {
+        permissionService.hasAccess(AssignedTask.CREATE);
         return Ag.create(AssignedTask.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.ASSIGNED_TASKS)
                 .sync(data);
     }
 
     @PUT
-    @SecureApi(permission = AssignedTask.UPDATE)
     public SimpleResponse put(String data) {
+        permissionService.hasAccess(AssignedTask.UPDATE);
         return Ag.createOrUpdate(AssignedTask.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.ASSIGNED_TASKS)
                 .sync(data);
@@ -60,8 +63,8 @@ public class AssignedTaskResource {
 
     @DELETE
     @Path("{taskId}")
-    @SecureApi(permission = AssignedTask.DELETE)
     public SimpleResponse delete(@PathParam("taskId") int id) {
+        permissionService.hasAccess(AssignedTask.DELETE);
         return Ag.delete(AssignedTask.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.ASSIGNED_TASKS)
                 .id(id)
@@ -69,8 +72,8 @@ public class AssignedTaskResource {
     }
 
     @GET
-    @SecureApi(permission = AssignedTask.LIST)
     public DataResponse<AssignedTask> list(@Context UriInfo uriInfo) {
+        permissionService.hasAccess(AssignedTask.LIST);
         return Ag.select(AssignedTask.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.ASSIGNED_TASKS)
                 .uri(uriInfo)

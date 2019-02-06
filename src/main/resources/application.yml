@@ -31,35 +31,23 @@ rabbitmq:
      exclusive: false
 
 # Jetty config
-jetty:
- connector:
-  port: 9000
- context: /skedule/rest
- minThreads: 1
- maxThreads: 40
+#jetty:
+# connector:
+#  port: 9000
+# context: /skedule/rest
+# minThreads: 1
+# maxThreads: 40
 
 # JDBC config
 jdbc:
  skedule:
   driverClassName: com.mysql.jdbc.Driver
-  url: jdbc:mysql://localhost:3306/skedule-app?connectTimeout=0&autoReconnect=true&useUnicode=true&characterEncoding=UTF-8
-  username: root
-  password: root
-  initialSize: 1
-  maxActive: 20
-  minIdle: 1
-  maxIdle: 4
-  validationQuery: "select 1;"
-  testWhileIdle: true
-  removeAbandoned: true
-  abandonWhenPercentageFull: 80
-  removeAbandonedTimeout: 300
-  jdbcInterceptors: ResetAbandonedTimer
-  rollbackOnReturn: true
-  defaultAutoCommit: false
+  jdbcUrl: jdbc:mysql://localhost:3306/skeduleApp?user=root&password=root&connectTimeout=0&autoReconnect=true&useUnicode=true&characterEncoding=UTF-8
+  maximumPoolSize: 1
+  minimumIdle: 1
 
 # Cayenne configs
 cayenne:
   datasource: skedule
   configs:
-   - cayenne-skedule.xml
+   - cayenne/cayenne-skedule.xml

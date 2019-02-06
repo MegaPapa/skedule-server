@@ -1,7 +1,7 @@
 package com.megapapa.sk.resource;
 
 import com.google.inject.Inject;
-import com.megapapa.sk.auth.annotation.SecureApi;
+import com.megapapa.sk.auth.service.IPermissionService;
 import com.megapapa.sk.auth.service.ISystemUserService;
 import com.megapapa.sk.cayenne.Company;
 import com.megapapa.sk.cayenne.CompanyTask;
@@ -33,10 +33,13 @@ public class TaskMessageResource {
     @Inject
     private ISystemUserService systemUserService;
 
+    @Inject
+    private IPermissionService permissionService;
+
     @GET
     @Path("{messageId}")
-    @SecureApi(permission = TaskMessage.READ)
     public DataResponse<TaskMessage> get(@PathParam("messageId") int id, @Context UriInfo uriInfo) {
+        permissionService.hasAccess(TaskMessage.READ);
         return Ag.select(TaskMessage.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.COMPANIES.dot(Company.COMPANY_TASKS.dot(CompanyTask.TASK_MESSAGES)))
                 .byId(id)
@@ -45,16 +48,16 @@ public class TaskMessageResource {
     }
 
     @POST
-    @SecureApi(permission = TaskMessage.CREATE)
     public SimpleResponse post(String data) {
+        permissionService.hasAccess(TaskMessage.CREATE);
         return Ag.create(TaskMessage.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.COMPANIES.dot(Company.COMPANY_TASKS.dot(CompanyTask.TASK_MESSAGES)))
                 .sync(data);
     }
 
     @PUT
-    @SecureApi(permission = TaskMessage.UPDATE)
     public SimpleResponse put(String data) {
+        permissionService.hasAccess(TaskMessage.UPDATE);
         return Ag.createOrUpdate(TaskMessage.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.COMPANIES.dot(Company.COMPANY_TASKS.dot(CompanyTask.TASK_MESSAGES)))
                 .sync(data);
@@ -62,8 +65,8 @@ public class TaskMessageResource {
 
     @DELETE
     @Path("{messageId}")
-    @SecureApi(permission = TaskMessage.DELETE)
     public SimpleResponse delete(@PathParam("messageId") int id) {
+        permissionService.hasAccess(TaskMessage.DELETE);
         return Ag.delete(TaskMessage.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.COMPANIES.dot(Company.COMPANY_TASKS.dot(CompanyTask.TASK_MESSAGES)))
                 .id(id)
@@ -71,8 +74,8 @@ public class TaskMessageResource {
     }
 
     @GET
-    @SecureApi(permission = TaskMessage.LIST)
     public DataResponse<TaskMessage> list(@Context UriInfo uriInfo) {
+        permissionService.hasAccess(TaskMessage.LIST);
         return Ag.select(TaskMessage.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.COMPANIES.dot(Company.COMPANY_TASKS.dot(CompanyTask.TASK_MESSAGES)))
                 .uri(uriInfo)

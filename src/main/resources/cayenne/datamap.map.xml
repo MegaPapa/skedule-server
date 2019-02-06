@@ -4,64 +4,64 @@
 	 xsi:schemaLocation="http://cayenne.apache.org/schema/9/modelMap https://cayenne.apache.org/schema/9/modelMap.xsd"
 	 project-version="9">
 	<property name="defaultPackage" value="com.megapapa.sk.cayenne"/>
-	<db-entity name="assigned_task" catalog="skedule-app">
+	<db-entity name="assigned_task" catalog="skeduleApp">
 		<db-attribute name="assignedTime" type="VARCHAR" length="255"/>
 		<db-attribute name="company_task_id" type="INTEGER" isPrimaryKey="true" isMandatory="true" length="10"/>
 		<db-attribute name="mongo_user_id" type="INTEGER" isPrimaryKey="true" isMandatory="true" length="10"/>
 	</db-entity>
-	<db-entity name="book_read_task" catalog="skedule-app">
+	<db-entity name="book_read_task" catalog="skeduleApp">
 		<db-attribute name="id" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="10"/>
 		<db-attribute name="isCompleted" type="BIT" isMandatory="true"/>
 		<db-attribute name="isbn" type="VARCHAR" length="255"/>
 		<db-attribute name="mongo_user_id" type="INTEGER" isMandatory="true" length="10"/>
 		<db-attribute name="title" type="VARCHAR" isMandatory="true" length="45"/>
 	</db-entity>
-	<db-entity name="company" catalog="skedule-app">
+	<db-entity name="company" catalog="skeduleApp">
 		<db-attribute name="address" type="VARCHAR" length="255"/>
 		<db-attribute name="country_id" type="INTEGER" isMandatory="true" length="10"/>
 		<db-attribute name="id" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="10"/>
 		<db-attribute name="name" type="VARCHAR" isMandatory="true" length="255"/>
 	</db-entity>
-	<db-entity name="company_invite" catalog="skedule-app">
+	<db-entity name="company_invite" catalog="skeduleApp">
 		<db-attribute name="company_id" type="INTEGER" isPrimaryKey="true" isMandatory="true" length="10"/>
 		<db-attribute name="isReaded" type="BIT" isMandatory="true"/>
 		<db-attribute name="message" type="LONGVARCHAR" length="2147483647"/>
 		<db-attribute name="mongo_user_id" type="INTEGER" isPrimaryKey="true" isMandatory="true" length="10"/>
 	</db-entity>
-	<db-entity name="company_task" catalog="skedule-app">
+	<db-entity name="company_task" catalog="skeduleApp">
 		<db-attribute name="company_id" type="INTEGER" isMandatory="true" length="10"/>
 		<db-attribute name="description" type="LONGVARCHAR" length="2147483647"/>
 		<db-attribute name="id" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="10"/>
 		<db-attribute name="isCompleted" type="BIT" isMandatory="true"/>
 		<db-attribute name="title" type="VARCHAR" isMandatory="true" length="255"/>
 	</db-entity>
-	<db-entity name="company_users" catalog="skedule-app">
+	<db-entity name="company_users" catalog="skeduleApp">
 		<db-attribute name="company_id" type="INTEGER" isPrimaryKey="true" isMandatory="true" length="10"/>
 		<db-attribute name="mongo_user_id" type="INTEGER" isPrimaryKey="true" isMandatory="true" length="10"/>
 	</db-entity>
-	<db-entity name="country" catalog="skedule-app">
+	<db-entity name="country" catalog="skeduleApp">
 		<db-attribute name="id" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="10"/>
 		<db-attribute name="name" type="VARCHAR" isMandatory="true" length="255"/>
 		<db-attribute name="shortname" type="VARCHAR" isMandatory="true" length="45"/>
 	</db-entity>
-	<db-entity name="currency" catalog="skedule-app">
+	<db-entity name="currency" catalog="skeduleApp">
 		<db-attribute name="id" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="10"/>
 		<db-attribute name="name" type="VARCHAR" isMandatory="true" length="255"/>
 		<db-attribute name="shortname" type="VARCHAR" isMandatory="true" length="255"/>
 		<db-attribute name="symbol" type="VARCHAR" isMandatory="true" length="12"/>
 	</db-entity>
-	<db-entity name="language" catalog="skedule-app">
+	<db-entity name="language" catalog="skeduleApp">
 		<db-attribute name="id" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="10"/>
 		<db-attribute name="name" type="VARCHAR" isMandatory="true" length="255"/>
 		<db-attribute name="shortname" type="VARCHAR" isMandatory="true" length="45"/>
 	</db-entity>
-	<db-entity name="mongo_user" catalog="skedule-app">
+	<db-entity name="mongo_user" catalog="skeduleApp">
 		<db-attribute name="currency_id" type="INTEGER" isMandatory="true" length="10"/>
 		<db-attribute name="id" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="10"/>
 		<db-attribute name="language_id" type="INTEGER" isMandatory="true" length="10"/>
 		<db-attribute name="mongo_id" type="VARCHAR" isMandatory="true" length="255"/>
 	</db-entity>
-	<db-entity name="movie_watch_task" catalog="skedule-app">
+	<db-entity name="movie_watch_task" catalog="skeduleApp">
 		<db-attribute name="id" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="10"/>
 		<db-attribute name="imdb_movie_id" type="INTEGER" length="10"/>
 		<db-attribute name="isCompleted" type="BIT" isMandatory="true"/>
@@ -69,14 +69,14 @@
 		<db-attribute name="mongo_user_id" type="INTEGER" isMandatory="true" length="10"/>
 		<db-attribute name="title" type="VARCHAR" isMandatory="true" length="45"/>
 	</db-entity>
-	<db-entity name="multistep_task" catalog="skedule-app">
+	<db-entity name="multistep_task" catalog="skeduleApp">
 		<db-attribute name="description" type="LONGVARCHAR" length="2147483647"/>
 		<db-attribute name="id" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="10"/>
 		<db-attribute name="isCompleted" type="BIT" isMandatory="true"/>
 		<db-attribute name="mongo_user_id" type="INTEGER" isMandatory="true" length="10"/>
 		<db-attribute name="title" type="VARCHAR" isMandatory="true" length="255"/>
 	</db-entity>
-	<db-entity name="reminder" catalog="skedule-app">
+	<db-entity name="reminder" catalog="skeduleApp">
 		<db-attribute name="createdTime" type="TIMESTAMP" isMandatory="true" length="19"/>
 		<db-attribute name="description" type="LONGVARCHAR" length="2147483647"/>
 		<db-attribute name="id" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="10"/>
@@ -85,7 +85,7 @@
 		<db-attribute name="title" type="VARCHAR" isMandatory="true" length="255"/>
 		<db-attribute name="type" type="CHAR" isMandatory="true" length="15"/>
 	</db-entity>
-	<db-entity name="repeatable_task" catalog="skedule-app">
+	<db-entity name="repeatable_task" catalog="skeduleApp">
 		<db-attribute name="createdTime" type="TIMESTAMP" isMandatory="true" length="19"/>
 		<db-attribute name="cron" type="VARCHAR" isMandatory="true" length="255"/>
 		<db-attribute name="description" type="LONGVARCHAR" length="2147483647"/>
@@ -95,7 +95,7 @@
 		<db-attribute name="mongo_user_id" type="INTEGER" isMandatory="true" length="10"/>
 		<db-attribute name="title" type="VARCHAR" isMandatory="true" length="255"/>
 	</db-entity>
-	<db-entity name="self_task" catalog="skedule-app">
+	<db-entity name="self_task" catalog="skeduleApp">
 		<db-attribute name="createdTime" type="TIMESTAMP" isMandatory="true" length="19"/>
 		<db-attribute name="description" type="LONGVARCHAR" length="2147483647"/>
 		<db-attribute name="endTime" type="TIMESTAMP" length="19"/>
@@ -104,12 +104,12 @@
 		<db-attribute name="mongo_user_id" type="INTEGER" isMandatory="true" length="10"/>
 		<db-attribute name="title" type="VARCHAR" isMandatory="true" length="255"/>
 	</db-entity>
-	<db-entity name="task_message" catalog="skedule-app">
+	<db-entity name="task_message" catalog="skeduleApp">
 		<db-attribute name="company_task_id" type="INTEGER" isMandatory="true" length="10"/>
 		<db-attribute name="id" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="10"/>
 		<db-attribute name="message" type="VARCHAR" isMandatory="true" length="255"/>
 	</db-entity>
-	<db-entity name="task_step" catalog="skedule-app">
+	<db-entity name="task_step" catalog="skeduleApp">
 		<db-attribute name="description" type="LONGVARCHAR" length="2147483647"/>
 		<db-attribute name="endTime" type="TIMESTAMP" length="19"/>
 		<db-attribute name="id" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="10"/>

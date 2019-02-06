@@ -1,6 +1,7 @@
 package com.megapapa.sk.cache.caffeine;
 
 import com.github.benmanes.caffeine.cache.LoadingCache;
+import com.megapapa.sk.auth.annotation.SecureApi;
 import com.megapapa.sk.auth.entity.SystemUser;
 import com.megapapa.sk.cache.IUserCacheService;
 

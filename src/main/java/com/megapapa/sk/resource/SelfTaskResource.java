@@ -1,7 +1,7 @@
 package com.megapapa.sk.resource;
 
 import com.google.inject.Inject;
-import com.megapapa.sk.auth.annotation.SecureApi;
+import com.megapapa.sk.auth.service.IPermissionService;
 import com.megapapa.sk.auth.service.ISystemUserService;
 import com.megapapa.sk.cayenne.MongoUser;
 import com.megapapa.sk.cayenne.SelfTask;
@@ -31,10 +31,13 @@ public class SelfTaskResource {
     @Inject
     private ISystemUserService systemUserService;
 
+    @Inject
+    private IPermissionService permissionService;
+
     @GET
     @Path("{taskId}")
-    @SecureApi(permission = SelfTask.READ)
     public DataResponse<SelfTask> get(@PathParam("taskId") int id, @Context UriInfo uriInfo) {
+        permissionService.hasAccess(SelfTask.READ);
         return Ag.select(SelfTask.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.SELF_TASKS)
                 .byId(id)
@@ -43,16 +46,16 @@ public class SelfTaskResource {
     }
 
     @POST
-    @SecureApi(permission = SelfTask.CREATE)
     public SimpleResponse post(String data) {
+        permissionService.hasAccess(SelfTask.CREATE);
         return Ag.create(SelfTask.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.SELF_TASKS)
                 .sync(data);
     }
 
     @PUT
-    @SecureApi(permission = SelfTask.UPDATE)
     public SimpleResponse put(String data) {
+        permissionService.hasAccess(SelfTask.UPDATE);
         return Ag.createOrUpdate(SelfTask.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.SELF_TASKS)
                 .sync(data);
@@ -60,8 +63,8 @@ public class SelfTaskResource {
 
     @DELETE
     @Path("{taskId}")
-    @SecureApi(permission = SelfTask.DELETE)
     public SimpleResponse delete(@PathParam("taskId") int id) {
+        permissionService.hasAccess(SelfTask.DELETE);
         return Ag.delete(SelfTask.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.SELF_TASKS)
                 .id(id)
@@ -69,8 +72,8 @@ public class SelfTaskResource {
     }
 
     @GET
-    @SecureApi(permission = SelfTask.LIST)
     public DataResponse<SelfTask> list(@Context UriInfo uriInfo) {
+        permissionService.hasAccess(SelfTask.LIST);
         return Ag.select(SelfTask.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.SELF_TASKS)
                 .uri(uriInfo)

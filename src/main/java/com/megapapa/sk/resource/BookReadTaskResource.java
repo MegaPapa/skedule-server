@@ -1,7 +1,7 @@
 package com.megapapa.sk.resource;
 
 import com.google.inject.Inject;
-import com.megapapa.sk.auth.annotation.SecureApi;
+import com.megapapa.sk.auth.service.IPermissionService;
 import com.megapapa.sk.auth.service.ISystemUserService;
 import com.megapapa.sk.cayenne.BookReadTask;
 import com.megapapa.sk.cayenne.MongoUser;
@@ -31,10 +31,13 @@ public class BookReadTaskResource {
     @Inject
     private ISystemUserService systemUserService;
 
+    @Inject
+    private IPermissionService permissionService;
+
     @GET
     @Path("{taskId}")
-    @SecureApi(permission = BookReadTask.READ)
     public DataResponse<BookReadTask> get(@PathParam("taskId") int id, @Context UriInfo uriInfo) {
+        permissionService.hasAccess(BookReadTask.READ);
         return Ag.select(BookReadTask.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.BOOK_READ_TASKS)
                 .byId(id)
@@ -43,16 +46,16 @@ public class BookReadTaskResource {
     }
 
     @POST
-    @SecureApi(permission = BookReadTask.CREATE)
     public SimpleResponse post(String data) {
+        permissionService.hasAccess(BookReadTask.CREATE);
         return Ag.create(BookReadTask.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.BOOK_READ_TASKS)
                 .sync(data);
     }
 
     @PUT
-    @SecureApi(permission = BookReadTask.UPDATE)
     public SimpleResponse put(String data) {
+        permissionService.hasAccess(BookReadTask.UPDATE);
         return Ag.createOrUpdate(BookReadTask.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.BOOK_READ_TASKS)
                 .sync(data);
@@ -60,8 +63,8 @@ public class BookReadTaskResource {
 
     @DELETE
     @Path("{taskId}")
-    @SecureApi(permission = BookReadTask.DELETE)
     public SimpleResponse delete(@PathParam("taskId") int id) {
+        permissionService.hasAccess(BookReadTask.DELETE);
         return Ag.delete(BookReadTask.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.BOOK_READ_TASKS)
                 .id(id)
@@ -69,8 +72,8 @@ public class BookReadTaskResource {
     }
 
     @GET
-    @SecureApi(permission = BookReadTask.LIST)
     public DataResponse<BookReadTask> list(@Context UriInfo uriInfo) {
+        permissionService.hasAccess(BookReadTask.LIST);
         return Ag.select(BookReadTask.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.BOOK_READ_TASKS)
                 .uri(uriInfo)

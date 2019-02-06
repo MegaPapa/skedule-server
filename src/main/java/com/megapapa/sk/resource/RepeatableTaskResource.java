@@ -1,7 +1,7 @@
 package com.megapapa.sk.resource;
 
 import com.google.inject.Inject;
-import com.megapapa.sk.auth.annotation.SecureApi;
+import com.megapapa.sk.auth.service.IPermissionService;
 import com.megapapa.sk.auth.service.ISystemUserService;
 import com.megapapa.sk.cayenne.MongoUser;
 import com.megapapa.sk.cayenne.RepeatableTask;
@@ -31,10 +31,13 @@ public class RepeatableTaskResource {
     @Inject
     private ISystemUserService systemUserService;
 
+    @Inject
+    private IPermissionService permissionService;
+
     @GET
     @Path("{repeatableTaskId}")
-    @SecureApi(permission = RepeatableTask.READ)
     public DataResponse<RepeatableTask> get(@PathParam("repeatableTaskId") int id, @Context UriInfo uriInfo) {
+        permissionService.hasAccess(RepeatableTask.READ);
         return Ag.select(RepeatableTask.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.REPEATABLE_TASKS)
                 .byId(id)
@@ -43,16 +46,16 @@ public class RepeatableTaskResource {
     }
 
     @POST
-    @SecureApi(permission = RepeatableTask.CREATE)
     public SimpleResponse post(String data) {
+        permissionService.hasAccess(RepeatableTask.CREATE);
         return Ag.create(RepeatableTask.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.REPEATABLE_TASKS)
                 .sync(data);
     }
 
     @PUT
-    @SecureApi(permission = RepeatableTask.UPDATE)
     public SimpleResponse put(String data) {
+        permissionService.hasAccess(RepeatableTask.UPDATE);
         return Ag.createOrUpdate(RepeatableTask.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.REPEATABLE_TASKS)
                 .sync(data);
@@ -60,8 +63,8 @@ public class RepeatableTaskResource {
 
     @DELETE
     @Path("{repeatableTaskId}")
-    @SecureApi(permission = RepeatableTask.DELETE)
     public SimpleResponse delete(@PathParam("repeatableTaskId") int id) {
+        permissionService.hasAccess(RepeatableTask.DELETE);
         return Ag.delete(RepeatableTask.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.REPEATABLE_TASKS)
                 .id(id)
@@ -69,8 +72,8 @@ public class RepeatableTaskResource {
     }
 
     @GET
-    @SecureApi(permission = RepeatableTask.LIST)
     public DataResponse<RepeatableTask> list(@Context UriInfo uriInfo) {
+        permissionService.hasAccess(RepeatableTask.LIST);
         return Ag.select(RepeatableTask.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.REPEATABLE_TASKS)
                 .uri(uriInfo)

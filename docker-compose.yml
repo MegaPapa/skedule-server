@@ -16,5 +16,5 @@ services:
     volumes:
       - ./src/main/resources/database/scripts/entrypoint:/docker-entrypoint-initdb.d
     environment:
-      MYSQL_DATABASE: skedule-app
+      MYSQL_DATABASE: skeduleApp
       MYSQL_ROOT_PASSWORD: root

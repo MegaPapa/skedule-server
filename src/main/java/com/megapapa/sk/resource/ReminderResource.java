@@ -1,7 +1,7 @@
 package com.megapapa.sk.resource;
 
 import com.google.inject.Inject;
-import com.megapapa.sk.auth.annotation.SecureApi;
+import com.megapapa.sk.auth.service.IPermissionService;
 import com.megapapa.sk.auth.service.ISystemUserService;
 import com.megapapa.sk.cayenne.MongoUser;
 import com.megapapa.sk.cayenne.Reminder;
@@ -31,28 +31,31 @@ public class ReminderResource {
     @Inject
     private ISystemUserService systemUserService;
 
+    @Inject
+    private IPermissionService permissionService;
+
     @GET
     @Path("{reminderId}")
-    @SecureApi(permission = Reminder.READ)
     public DataResponse<Reminder> get(@PathParam("reminderId") int id, @Context UriInfo uriInfo) {
+        permissionService.hasAccess(Reminder.READ);
         return Ag.select(Reminder.class, config)
-                .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.REMINDERS)
+                .toManyParent(MongoUser.class, 1L, MongoUser.REMINDERS)
                 .byId(id)
                 .uri(uriInfo)
                 .get();
     }
 
     @POST
-    @SecureApi(permission = Reminder.CREATE)
     public SimpleResponse post(String data) {
+        permissionService.hasAccess(Reminder.CREATE);
         return Ag.create(Reminder.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.REMINDERS)
                 .sync(data);
     }
 
     @PUT
-    @SecureApi(permission = Reminder.UPDATE)
     public SimpleResponse put(String data) {
+        permissionService.hasAccess(Reminder.UPDATE);
         return Ag.createOrUpdate(Reminder.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.REMINDERS)
                 .sync(data);
@@ -60,8 +63,8 @@ public class ReminderResource {
 
     @DELETE
     @Path("{reminderId}")
-    @SecureApi(permission = Reminder.DELETE)
     public SimpleResponse delete(@PathParam("reminderId") int id) {
+        permissionService.hasAccess(Reminder.DELETE);
         return Ag.delete(Reminder.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.REMINDERS)
                 .id(id)
@@ -69,8 +72,8 @@ public class ReminderResource {
     }
 
     @GET
-    @SecureApi(permission = Reminder.LIST)
     public DataResponse<Reminder> list(@Context UriInfo uriInfo) {
+        permissionService.hasAccess(Reminder.LIST);
         return Ag.select(Reminder.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.REMINDERS)
                 .uri(uriInfo)

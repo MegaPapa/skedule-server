@@ -1,7 +1,7 @@
 package com.megapapa.sk.resource;
 
 import com.google.inject.Inject;
-import com.megapapa.sk.auth.annotation.SecureApi;
+import com.megapapa.sk.auth.service.IPermissionService;
 import com.megapapa.sk.auth.service.ISystemUserService;
 import com.megapapa.sk.cayenne.MongoUser;
 import com.megapapa.sk.cayenne.MovieWatchTask;
@@ -31,10 +31,13 @@ public class MovieWatchTaskResource {
     @Inject
     private ISystemUserService systemUserService;
 
+    @Inject
+    private IPermissionService permissionService;
+
     @GET
     @Path("{taskId}")
-    @SecureApi(permission = MovieWatchTask.READ)
     public DataResponse<MovieWatchTask> get(@PathParam("taskId") int id, @Context UriInfo uriInfo) {
+        permissionService.hasAccess(MovieWatchTask.READ);
         return Ag.select(MovieWatchTask.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.MOVIE_WATCH_TASKS)
                 .byId(id)
@@ -43,16 +46,16 @@ public class MovieWatchTaskResource {
     }
 
     @POST
-    @SecureApi(permission = MovieWatchTask.CREATE)
     public SimpleResponse post(String data) {
+        permissionService.hasAccess(MovieWatchTask.CREATE);
         return Ag.create(MovieWatchTask.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.MOVIE_WATCH_TASKS)
                 .sync(data);
     }
 
     @PUT
-    @SecureApi(permission = MovieWatchTask.UPDATE)
     public SimpleResponse put(String data) {
+        permissionService.hasAccess(MovieWatchTask.UPDATE);
         return Ag.createOrUpdate(MovieWatchTask.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.MOVIE_WATCH_TASKS)
                 .sync(data);
@@ -60,8 +63,8 @@ public class MovieWatchTaskResource {
 
     @DELETE
     @Path("{taskId}")
-    @SecureApi(permission = MovieWatchTask.DELETE)
     public SimpleResponse delete(@PathParam("taskId") int id) {
+        permissionService.hasAccess(MovieWatchTask.DELETE);
         return Ag.delete(MovieWatchTask.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.MOVIE_WATCH_TASKS)
                 .id(id)
@@ -69,8 +72,8 @@ public class MovieWatchTaskResource {
     }
 
     @GET
-    @SecureApi(permission = MovieWatchTask.LIST)
     public DataResponse<MovieWatchTask> list(@Context UriInfo uriInfo) {
+        permissionService.hasAccess(MovieWatchTask.LIST);
         return Ag.select(MovieWatchTask.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.MOVIE_WATCH_TASKS)
                 .uri(uriInfo)
