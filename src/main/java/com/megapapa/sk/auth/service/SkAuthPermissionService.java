@@ -7,10 +7,12 @@ import com.megapapa.sk.auth.annotation.SecureApi;
 import com.megapapa.sk.auth.entity.AuthRequestMessage;
 import com.megapapa.sk.auth.entity.SystemUser;
 import com.megapapa.sk.auth.exception.InvalidAuthTokenException;
+import com.megapapa.sk.auth.rabbitmq.AuthMessageConsumer;
 import com.megapapa.sk.cache.IUserCacheService;
 import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.DefaultConsumer;
 import com.rabbitmq.client.RpcClient;
 import io.bootique.jetty.servlet.DefaultServletEnvironment;
 import io.bootique.rabbitmq.client.connection.ConnectionFactory;
@@ -26,7 +28,7 @@ public class SkAuthPermissionService implements IPermissionService {
 
     private static final String SK_AUTH_CONNECTION_NAME = "sk-auth";
     private static final String SK_AUTH_EXCHANGE_NAME = "sk-auth-exchange";
-    public static final String AUTH_QUEUE_NAME = "auth";
+    public static final String AUTH_QUEUE_NAME = "sk-auth";
 
     private ConnectionFactory connectionFactory;
     private ISystemUserService systemUserService;
@@ -94,9 +96,10 @@ public class SkAuthPermissionService implements IPermissionService {
         ObjectMapper mapper = new ObjectMapper();
         String requestMessageJson = mapper.writeValueAsString(requestMessage);
 
-//        channel.basicPublish("", AUTH_QUEUE_NAME, null, requestMessageJson.getBytes());
-        RpcClient client = new RpcClient(channel, "", "");
-        String response = client.stringCall(requestMessageJson);
+        channel.basicPublish("", AUTH_QUEUE_NAME, null, requestMessageJson.getBytes());
+        channel.basicConsume(AUTH_QUEUE_NAME, new AuthMessageConsumer(channel));
+//        RpcClient client = new RpcClient(channel, "", "");
+//        String response = client.stringCall(requestMessageJson);
         return null;
 //
 //        AMQP.BasicProperties props = new AMQP.BasicProperties

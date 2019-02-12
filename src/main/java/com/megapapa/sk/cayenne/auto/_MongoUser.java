@@ -8,9 +8,11 @@ import org.apache.cayenne.exp.Property;
 import com.megapapa.sk.cayenne.AssignedTask;
 import com.megapapa.sk.cayenne.BookReadTask;
 import com.megapapa.sk.cayenne.Company;
+import com.megapapa.sk.cayenne.CompanyInvite;
 import com.megapapa.sk.cayenne.Currency;
 import com.megapapa.sk.cayenne.Language;
 import com.megapapa.sk.cayenne.MovieWatchTask;
+import com.megapapa.sk.cayenne.MultistepTask;
 import com.megapapa.sk.cayenne.Reminder;
 import com.megapapa.sk.cayenne.RepeatableTask;
 import com.megapapa.sk.cayenne.SelfTask;
@@ -31,9 +33,11 @@ public abstract class _MongoUser extends CayenneDataObject {
     public static final Property<List<AssignedTask>> ASSIGNED_TASKS = Property.create("assignedTasks", List.class);
     public static final Property<List<BookReadTask>> BOOK_READ_TASKS = Property.create("bookReadTasks", List.class);
     public static final Property<List<Company>> COMPANIES = Property.create("companies", List.class);
+    public static final Property<List<CompanyInvite>> COMPANY_INVITES = Property.create("companyInvites", List.class);
     public static final Property<Currency> CURRENCY = Property.create("currency", Currency.class);
     public static final Property<Language> LANGUAGE = Property.create("language", Language.class);
     public static final Property<List<MovieWatchTask>> MOVIE_WATCH_TASKS = Property.create("movieWatchTasks", List.class);
+    public static final Property<List<MultistepTask>> MULTISTEP_TASKS = Property.create("multistepTasks", List.class);
     public static final Property<List<Reminder>> REMINDERS = Property.create("reminders", List.class);
     public static final Property<List<RepeatableTask>> REPEATABLE_TASKS = Property.create("repeatableTasks", List.class);
     public static final Property<List<SelfTask>> SELF_TASKS = Property.create("selfTasks", List.class);
@@ -81,6 +85,18 @@ public abstract class _MongoUser extends CayenneDataObject {
     }
 
 
+    public void addToCompanyInvites(CompanyInvite obj) {
+        addToManyTarget("companyInvites", obj, true);
+    }
+    public void removeFromCompanyInvites(CompanyInvite obj) {
+        removeToManyTarget("companyInvites", obj, true);
+    }
+    @SuppressWarnings("unchecked")
+    public List<CompanyInvite> getCompanyInvites() {
+        return (List<CompanyInvite>)readProperty("companyInvites");
+    }
+
+
     public void setCurrency(Currency currency) {
         setToOneTarget("currency", currency, true);
     }
@@ -108,6 +124,18 @@ public abstract class _MongoUser extends CayenneDataObject {
     @SuppressWarnings("unchecked")
     public List<MovieWatchTask> getMovieWatchTasks() {
         return (List<MovieWatchTask>)readProperty("movieWatchTasks");
+    }
+
+
+    public void addToMultistepTasks(MultistepTask obj) {
+        addToManyTarget("multistepTasks", obj, true);
+    }
+    public void removeFromMultistepTasks(MultistepTask obj) {
+        removeToManyTarget("multistepTasks", obj, true);
+    }
+    @SuppressWarnings("unchecked")
+    public List<MultistepTask> getMultistepTasks() {
+        return (List<MultistepTask>)readProperty("multistepTasks");
     }
 
 

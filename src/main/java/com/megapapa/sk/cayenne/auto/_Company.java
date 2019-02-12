@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.cayenne.CayenneDataObject;
 import org.apache.cayenne.exp.Property;
 
+import com.megapapa.sk.cayenne.CompanyInvite;
 import com.megapapa.sk.cayenne.CompanyTask;
 import com.megapapa.sk.cayenne.Country;
 import com.megapapa.sk.cayenne.MongoUser;
@@ -23,6 +24,7 @@ public abstract class _Company extends CayenneDataObject {
 
     public static final Property<String> ADDRESS = Property.create("address", String.class);
     public static final Property<String> NAME = Property.create("name", String.class);
+    public static final Property<List<CompanyInvite>> COMPANY_INVITES = Property.create("companyInvites", List.class);
     public static final Property<List<CompanyTask>> COMPANY_TASKS = Property.create("companyTasks", List.class);
     public static final Property<Country> COUNTRY = Property.create("country", Country.class);
     public static final Property<List<MongoUser>> MONGO_USERS = Property.create("mongoUsers", List.class);
@@ -40,6 +42,18 @@ public abstract class _Company extends CayenneDataObject {
     public String getName() {
         return (String)readProperty("name");
     }
+
+    public void addToCompanyInvites(CompanyInvite obj) {
+        addToManyTarget("companyInvites", obj, true);
+    }
+    public void removeFromCompanyInvites(CompanyInvite obj) {
+        removeToManyTarget("companyInvites", obj, true);
+    }
+    @SuppressWarnings("unchecked")
+    public List<CompanyInvite> getCompanyInvites() {
+        return (List<CompanyInvite>)readProperty("companyInvites");
+    }
+
 
     public void addToCompanyTasks(CompanyTask obj) {
         addToManyTarget("companyTasks", obj, true);

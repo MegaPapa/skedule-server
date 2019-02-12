@@ -5,6 +5,7 @@ userCache:
 
 auth:
   resourcesPackage: com.megapapa.sk.resource
+  debug: true
 
 rabbitmq:
   connections:

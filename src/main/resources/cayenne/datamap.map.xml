@@ -201,6 +201,9 @@
 	<db-relationship name="mongoUser" source="book_read_task" target="mongo_user" toMany="false">
 		<db-attribute-pair source="mongo_user_id" target="id"/>
 	</db-relationship>
+	<db-relationship name="companyInvites" source="company" target="company_invite" toDependentPK="true" toMany="true">
+		<db-attribute-pair source="id" target="company_id"/>
+	</db-relationship>
 	<db-relationship name="companyTasks" source="company" target="company_task" toMany="true">
 		<db-attribute-pair source="id" target="company_id"/>
 	</db-relationship>
@@ -246,6 +249,9 @@
 	<db-relationship name="bookReadTasks" source="mongo_user" target="book_read_task" toMany="true">
 		<db-attribute-pair source="id" target="mongo_user_id"/>
 	</db-relationship>
+	<db-relationship name="companyInvites" source="mongo_user" target="company_invite" toDependentPK="true" toMany="true">
+		<db-attribute-pair source="id" target="mongo_user_id"/>
+	</db-relationship>
 	<db-relationship name="companyUserss" source="mongo_user" target="company_users" toDependentPK="true" toMany="true">
 		<db-attribute-pair source="id" target="mongo_user_id"/>
 	</db-relationship>
@@ -256,6 +262,9 @@
 		<db-attribute-pair source="language_id" target="id"/>
 	</db-relationship>
 	<db-relationship name="movieWatchTasks" source="mongo_user" target="movie_watch_task" toMany="true">
+		<db-attribute-pair source="id" target="mongo_user_id"/>
+	</db-relationship>
+	<db-relationship name="multistepTasks" source="mongo_user" target="multistep_task" toMany="true">
 		<db-attribute-pair source="id" target="mongo_user_id"/>
 	</db-relationship>
 	<db-relationship name="reminders" source="mongo_user" target="reminder" toMany="true">
@@ -294,6 +303,7 @@
 	<obj-relationship name="companyTask" source="AssignedTask" target="CompanyTask" deleteRule="Nullify" db-relationship-path="companyTask"/>
 	<obj-relationship name="mongoUser" source="AssignedTask" target="MongoUser" deleteRule="Nullify" db-relationship-path="mongoUser"/>
 	<obj-relationship name="mongoUser" source="BookReadTask" target="MongoUser" deleteRule="Nullify" db-relationship-path="mongoUser"/>
+	<obj-relationship name="companyInvites" source="Company" target="CompanyInvite" deleteRule="Deny" db-relationship-path="companyInvites"/>
 	<obj-relationship name="companyTasks" source="Company" target="CompanyTask" deleteRule="Deny" db-relationship-path="companyTasks"/>
 	<obj-relationship name="country" source="Company" target="Country" deleteRule="Nullify" db-relationship-path="country"/>
 	<obj-relationship name="mongoUsers" source="Company" target="MongoUser" db-relationship-path="companyUserss.mongoUser"/>
@@ -308,9 +318,11 @@
 	<obj-relationship name="assignedTasks" source="MongoUser" target="AssignedTask" deleteRule="Deny" db-relationship-path="assignedTasks"/>
 	<obj-relationship name="bookReadTasks" source="MongoUser" target="BookReadTask" deleteRule="Deny" db-relationship-path="bookReadTasks"/>
 	<obj-relationship name="companies" source="MongoUser" target="Company" db-relationship-path="companyUserss.company"/>
+	<obj-relationship name="companyInvites" source="MongoUser" target="CompanyInvite" deleteRule="Deny" db-relationship-path="companyInvites"/>
 	<obj-relationship name="currency" source="MongoUser" target="Currency" deleteRule="Nullify" db-relationship-path="currency"/>
 	<obj-relationship name="language" source="MongoUser" target="Language" deleteRule="Nullify" db-relationship-path="language"/>
 	<obj-relationship name="movieWatchTasks" source="MongoUser" target="MovieWatchTask" deleteRule="Deny" db-relationship-path="movieWatchTasks"/>
+	<obj-relationship name="multistepTasks" source="MongoUser" target="MultistepTask" deleteRule="Deny" db-relationship-path="multistepTasks"/>
 	<obj-relationship name="reminders" source="MongoUser" target="Reminder" deleteRule="Deny" db-relationship-path="reminders"/>
 	<obj-relationship name="repeatableTasks" source="MongoUser" target="RepeatableTask" deleteRule="Deny" db-relationship-path="repeatableTasks"/>
 	<obj-relationship name="selfTasks" source="MongoUser" target="SelfTask" deleteRule="Deny" db-relationship-path="selfTasks"/>
