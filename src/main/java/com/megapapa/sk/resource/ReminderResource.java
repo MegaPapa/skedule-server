@@ -5,8 +5,9 @@ import com.megapapa.sk.auth.service.IPermissionService;
 import com.megapapa.sk.auth.service.ISystemUserService;
 import com.megapapa.sk.cayenne.MongoUser;
 import com.megapapa.sk.cayenne.Reminder;
+import com.megapapa.sk.resource.error.HasNoAccessResponse;
 import io.agrest.Ag;
-import io.agrest.DataResponse;
+import io.agrest.AgResponse;
 import io.agrest.SimpleResponse;
 
 import javax.ws.rs.DELETE;
@@ -36,10 +37,12 @@ public class ReminderResource {
 
     @GET
     @Path("{reminderId}")
-    public DataResponse<Reminder> get(@PathParam("reminderId") int id, @Context UriInfo uriInfo) {
-        permissionService.hasAccess(Reminder.READ);
+    public AgResponse get(@PathParam("reminderId") int id, @Context UriInfo uriInfo) {
+        if (permissionService.hasAccess(Reminder.READ)) {
+            return new HasNoAccessResponse(Reminder.READ);
+        }
         return Ag.select(Reminder.class, config)
-                .toManyParent(MongoUser.class, 1L, MongoUser.REMINDERS)
+                .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.REMINDERS)
                 .byId(id)
                 .uri(uriInfo)
                 .get();
@@ -47,7 +50,9 @@ public class ReminderResource {
 
     @POST
     public SimpleResponse post(String data) {
-        permissionService.hasAccess(Reminder.CREATE);
+        if (permissionService.hasAccess(Reminder.CREATE)) {
+            return new HasNoAccessResponse(Reminder.CREATE);
+        }
         return Ag.create(Reminder.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.REMINDERS)
                 .sync(data);
@@ -55,7 +60,9 @@ public class ReminderResource {
 
     @PUT
     public SimpleResponse put(String data) {
-        permissionService.hasAccess(Reminder.UPDATE);
+        if (permissionService.hasAccess(Reminder.UPDATE)) {
+            return new HasNoAccessResponse(Reminder.UPDATE);
+        }
         return Ag.createOrUpdate(Reminder.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.REMINDERS)
                 .sync(data);
@@ -64,7 +71,9 @@ public class ReminderResource {
     @DELETE
     @Path("{reminderId}")
     public SimpleResponse delete(@PathParam("reminderId") int id) {
-        permissionService.hasAccess(Reminder.DELETE);
+        if (permissionService.hasAccess(Reminder.DELETE)) {
+            return new HasNoAccessResponse(Reminder.DELETE);
+        }
         return Ag.delete(Reminder.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.REMINDERS)
                 .id(id)
@@ -72,8 +81,10 @@ public class ReminderResource {
     }
 
     @GET
-    public DataResponse<Reminder> list(@Context UriInfo uriInfo) {
-        permissionService.hasAccess(Reminder.LIST);
+    public AgResponse list(@Context UriInfo uriInfo) {
+        if (permissionService.hasAccess(Reminder.LIST)) {
+            return new HasNoAccessResponse(Reminder.LIST);
+        }
         return Ag.select(Reminder.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.REMINDERS)
                 .uri(uriInfo)

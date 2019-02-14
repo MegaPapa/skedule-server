@@ -11,6 +11,7 @@ import com.megapapa.sk.auth.service.IPermissionService;
 import com.megapapa.sk.auth.service.ISystemUserService;
 import com.megapapa.sk.auth.service.PermissionServiceFactory;
 import com.megapapa.sk.auth.service.SkAuthPermissionService;
+import com.megapapa.sk.auth.service.StubSystemUserService;
 import com.megapapa.sk.auth.service.SystemUserService;
 import com.megapapa.sk.cache.CacheModule;
 import com.megapapa.sk.cache.IUserCacheService;
@@ -52,10 +53,12 @@ public class AuthModule extends ConfigModule {
                 .createPermissionService(environment, systemUserService, userCacheService, connectionFactory);
     }
 
-    // TODO: Singleton? It will be used in multithreading way
     @Provides
-    @Singleton
-    public ISystemUserService provideSystemUserService() {
-        return new SystemUserService();
+    public ISystemUserService provideSystemUserService(ConfigurationFactory configFactory) {
+        if (!configFactory.config(PermissionServiceFactory.class, AUTH_MODULE_PREFIX).isDebug()) {
+            return new SystemUserService();
+        } else {
+            return new StubSystemUserService();
+        }
     }
 }

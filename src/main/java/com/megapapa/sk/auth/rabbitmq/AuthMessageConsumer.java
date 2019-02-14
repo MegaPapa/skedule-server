@@ -10,18 +10,22 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.Map;
+import java.util.UUID;
 
 public class AuthMessageConsumer extends DefaultConsumer {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthMessageConsumer.class);
+    private Map<UUID, AuthResponseMessage> brokerResponses;
 
     /**
      * Constructs a new instance and records its association to the passed-in channel.
      *
      * @param channel the channel to which this consumer is attached
      */
-    public AuthMessageConsumer(Channel channel) {
+    public AuthMessageConsumer(Channel channel, Map<UUID, AuthResponseMessage> brokerResponses) {
         super(channel);
+        this.brokerResponses = brokerResponses;
     }
 
     @Override

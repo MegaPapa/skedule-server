@@ -1,6 +1,7 @@
 package com.megapapa.sk.resource;
 
 import com.google.inject.Inject;
+import com.megapapa.sk.auth.exception.InvalidAuthTokenException;
 import com.megapapa.sk.auth.service.IPermissionService;
 import com.megapapa.sk.auth.service.ISystemUserService;
 import com.megapapa.sk.cayenne.AssignedTask;

@@ -5,6 +5,7 @@ import com.google.inject.Inject;
 import com.megapapa.sk.auth.AuthModule;
 import com.megapapa.sk.auth.annotation.SecureApi;
 import com.megapapa.sk.auth.entity.AuthRequestMessage;
+import com.megapapa.sk.auth.entity.AuthResponseMessage;
 import com.megapapa.sk.auth.entity.SystemUser;
 import com.megapapa.sk.auth.exception.InvalidAuthTokenException;
 import com.megapapa.sk.auth.rabbitmq.AuthMessageConsumer;
@@ -21,19 +22,23 @@ import org.apache.cayenne.configuration.server.ServerRuntime;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeoutException;
 
 public class SkAuthPermissionService implements IPermissionService {
 
     private static final String SK_AUTH_CONNECTION_NAME = "sk-auth";
-    private static final String SK_AUTH_EXCHANGE_NAME = "sk-auth-exchange";
+    private static final String AUTH_EXCHANGE_NAME = "sk-auth-exchange";
     public static final String AUTH_QUEUE_NAME = "sk-auth";
 
     private ConnectionFactory connectionFactory;
     private ISystemUserService systemUserService;
     private IUserCacheService userCacheService;
     private DefaultServletEnvironment environment;
+
+    private Map<UUID, AuthResponseMessage> brokerResponses;
 
     public SkAuthPermissionService(DefaultServletEnvironment environment,
                                    ISystemUserService systemUserService,
@@ -44,6 +49,7 @@ public class SkAuthPermissionService implements IPermissionService {
         this.systemUserService = systemUserService;
         this.userCacheService = userCacheService;
         this.connectionFactory = connectionFactory;
+        this.brokerResponses = new ConcurrentHashMap<>();
     }
 
     @Override
@@ -96,10 +102,10 @@ public class SkAuthPermissionService implements IPermissionService {
         ObjectMapper mapper = new ObjectMapper();
         String requestMessageJson = mapper.writeValueAsString(requestMessage);
 
-        channel.basicPublish("", AUTH_QUEUE_NAME, null, requestMessageJson.getBytes());
-        channel.basicConsume(AUTH_QUEUE_NAME, new AuthMessageConsumer(channel));
-//        RpcClient client = new RpcClient(channel, "", "");
-//        String response = client.stringCall(requestMessageJson);
+//        channel.basicPublish("", AUTH_QUEUE_NAME, null, requestMessageJson.getBytes());
+//        channel.basicConsume(AUTH_QUEUE_NAME, new AuthMessageConsumer(channel, brokerResponses));
+        RpcClient client = new RpcClient(channel, AUTH_EXCHANGE_NAME, "");
+        String response = client.stringCall(requestMessageJson);
         return null;
 //
 //        AMQP.BasicProperties props = new AMQP.BasicProperties
