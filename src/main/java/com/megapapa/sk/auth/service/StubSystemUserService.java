@@ -13,7 +13,7 @@ public class StubSystemUserService implements ISystemUserService {
         defaultSystemUser.setLastName("Doe");
         defaultSystemUser.setGender("M");
         defaultSystemUser.setPassword("AGAGAGAGAGA");
-        defaultSystemUser.setUsername("TestUser");
+        defaultSystemUser.setNickname("TestUser");
     }
 
     @Override

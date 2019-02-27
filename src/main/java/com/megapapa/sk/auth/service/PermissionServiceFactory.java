@@ -10,16 +10,28 @@ public class PermissionServiceFactory {
 
     private static final Logger logger = LoggerFactory.getLogger(PermissionServiceFactory.class);
 
+    private static final String HTTP_PERMISSION_SERVICE = "http";
+    private static final String RABBITMQ_PERMISSION_SERVICE = "rabbitmq";
+
     private String resourcesPackage;
     private boolean debug;
+    private String type;
 
     public IPermissionService createPermissionService(DefaultServletEnvironment environment,
                                                       ISystemUserService systemUserService,
                                                       IUserCacheService userCacheService,
                                                       ConnectionFactory connectionFactory) {
         if (!debug) {
-            logger.info("Permission service starting work in RABBITMQ mode.");
-            return new SkAuthPermissionService(environment, systemUserService, userCacheService, connectionFactory);
+            switch (type) {
+                case HTTP_PERMISSION_SERVICE:
+                    logger.info("Permission service starting work in HTTP mode");
+                    return new SkAuthHttpPermissionService(environment, systemUserService, userCacheService);
+                case RABBITMQ_PERMISSION_SERVICE:
+                    logger.info("Permission service starting work in RABBITMQ mode.");
+                    return new SkAuthPermissionService(environment, systemUserService, userCacheService, connectionFactory);
+                default:
+                    throw new IllegalStateException("Invalid permission service type!");
+            }
         } else {
             logger.info("Permission service starting work in DEBUG mode.");
             return new DebugPermissionService();
@@ -40,5 +52,13 @@ public class PermissionServiceFactory {
 
     public boolean isDebug() {
         return debug;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

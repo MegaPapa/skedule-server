@@ -101,11 +101,12 @@ public class SkAuthPermissionService implements IPermissionService {
         requestMessage.setPath(permissionPath);
         ObjectMapper mapper = new ObjectMapper();
         String requestMessageJson = mapper.writeValueAsString(requestMessage);
+        byte[] bytes = mapper.writeValueAsBytes(requestMessage);
 
 //        channel.basicPublish("", AUTH_QUEUE_NAME, null, requestMessageJson.getBytes());
 //        channel.basicConsume(AUTH_QUEUE_NAME, new AuthMessageConsumer(channel, brokerResponses));
         RpcClient client = new RpcClient(channel, AUTH_EXCHANGE_NAME, "");
-        String response = client.stringCall(requestMessageJson);
+        byte[] response = client.primitiveCall(bytes);
         return null;
 //
 //        AMQP.BasicProperties props = new AMQP.BasicProperties

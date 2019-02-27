@@ -5,7 +5,8 @@ userCache:
 
 auth:
   resourcesPackage: com.megapapa.sk.resource
-  debug: true
+  type: http
+  debug: false
 
 rabbitmq:
   connections:
@@ -44,7 +45,7 @@ jdbc:
  skedule:
   driverClassName: com.mysql.jdbc.Driver
   jdbcUrl: jdbc:mysql://localhost:3306/skeduleApp?user=root&password=root&connectTimeout=0&autoReconnect=true&useUnicode=true&characterEncoding=UTF-8
-  maximumPoolSize: 1
+  maximumPoolSize: 10
   minimumIdle: 1
 
 # Cayenne configs
