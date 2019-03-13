@@ -1,10 +1,11 @@
 package com.megapapa.sk.auth.entity;
 
-public class AuthToken {
+public class Payload {
 
     private String email;
-    private String nickname;
     private String token;
+    private String nickname;
+    private String path;
 
     public String getEmail() {
         return email;
@@ -12,6 +13,14 @@ public class AuthToken {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public String getNickname() {
@@ -22,11 +31,11 @@ public class AuthToken {
         this.nickname = nickname;
     }
 
-    public String getToken() {
-        return token;
+    public String getPath() {
+        return path;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setPath(String path) {
+        this.path = path;
     }
 }

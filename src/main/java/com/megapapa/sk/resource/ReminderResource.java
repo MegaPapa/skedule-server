@@ -38,7 +38,7 @@ public class ReminderResource {
     @GET
     @Path("{reminderId}")
     public AgResponse get(@PathParam("reminderId") int id, @Context UriInfo uriInfo) {
-        if (permissionService.hasAccess(Reminder.READ)) {
+        if (!permissionService.hasAccess(Reminder.READ)) {
             return new HasNoAccessResponse(Reminder.READ);
         }
         return Ag.select(Reminder.class, config)
@@ -50,7 +50,7 @@ public class ReminderResource {
 
     @POST
     public SimpleResponse post(String data) {
-        if (permissionService.hasAccess(Reminder.CREATE)) {
+        if (!permissionService.hasAccess(Reminder.CREATE)) {
             return new HasNoAccessResponse(Reminder.CREATE);
         }
         return Ag.create(Reminder.class, config)
@@ -60,7 +60,7 @@ public class ReminderResource {
 
     @PUT
     public SimpleResponse put(String data) {
-        if (permissionService.hasAccess(Reminder.UPDATE)) {
+        if (!permissionService.hasAccess(Reminder.UPDATE)) {
             return new HasNoAccessResponse(Reminder.UPDATE);
         }
         return Ag.createOrUpdate(Reminder.class, config)
@@ -71,7 +71,7 @@ public class ReminderResource {
     @DELETE
     @Path("{reminderId}")
     public SimpleResponse delete(@PathParam("reminderId") int id) {
-        if (permissionService.hasAccess(Reminder.DELETE)) {
+        if (!permissionService.hasAccess(Reminder.DELETE)) {
             return new HasNoAccessResponse(Reminder.DELETE);
         }
         return Ag.delete(Reminder.class, config)
@@ -82,7 +82,7 @@ public class ReminderResource {
 
     @GET
     public AgResponse list(@Context UriInfo uriInfo) {
-        if (permissionService.hasAccess(Reminder.LIST)) {
+        if (!permissionService.hasAccess(Reminder.LIST)) {
             return new HasNoAccessResponse(Reminder.LIST);
         }
         return Ag.select(Reminder.class, config)

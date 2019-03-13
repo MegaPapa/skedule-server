@@ -33,12 +33,12 @@ rabbitmq:
      exclusive: false
 
 # Jetty config
-#jetty:
-# connector:
-#  port: 9000
-# context: /skedule/rest
-# minThreads: 1
-# maxThreads: 40
+jetty:
+ connectors:
+  - port: 8080
+ context: /
+ minThreads: 1
+ maxThreads: 40
 
 # JDBC config
 jdbc:

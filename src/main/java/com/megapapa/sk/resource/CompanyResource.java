@@ -5,7 +5,9 @@ import com.megapapa.sk.auth.service.IPermissionService;
 import com.megapapa.sk.auth.service.ISystemUserService;
 import com.megapapa.sk.cayenne.Company;
 import com.megapapa.sk.cayenne.MongoUser;
+import com.megapapa.sk.resource.error.HasNoAccessResponse;
 import io.agrest.Ag;
+import io.agrest.AgResponse;
 import io.agrest.DataResponse;
 import io.agrest.SimpleResponse;
 
@@ -36,7 +38,10 @@ public class CompanyResource {
 
     @GET
     @Path("{companyId}")
-    public DataResponse<Company> get(@PathParam("companyId") int id, @Context UriInfo uriInfo) {
+    public AgResponse get(@PathParam("companyId") int id, @Context UriInfo uriInfo) {
+        if (!permissionService.hasAccess(Company.READ)) {
+            return new HasNoAccessResponse(Company.READ);
+        }
         permissionService.hasAccess(Company.READ);
         return Ag.select(Company.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.COMPANIES)
@@ -46,8 +51,10 @@ public class CompanyResource {
     }
 
     @POST
-    public SimpleResponse post(String data) {
-        permissionService.hasAccess(Company.CREATE);
+    public AgResponse post(String data) {
+        if (!permissionService.hasAccess(Company.CREATE)) {
+            return new HasNoAccessResponse(Company.CREATE);
+        }
         return Ag.create(Company.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.COMPANIES)
                 .sync(data);
@@ -64,7 +71,9 @@ public class CompanyResource {
     @DELETE
     @Path("{companyId}")
     public SimpleResponse delete(@PathParam("companyId") int id) {
-        permissionService.hasAccess(Company.DELETE);
+        if (!permissionService.hasAccess(Company.DELETE)) {
+            return new HasNoAccessResponse(Company.DELETE);
+        }
         return Ag.delete(Company.class, config)
                 .toManyParent(MongoUser.class, systemUserService.getSystemUser().getId(), MongoUser.COMPANIES)
                 .id(id)
